@@ -1,4 +1,10 @@
 class Validator {
+  constructor() {
+    this.SUBGROUPS_EACH_WAY = 3;
+    this.SUBGROUP_WIDTH = 6;
+    this.SUBGROUP_HEIGHT = 3;
+  }
+
   static validate(sudoku) {
     const validator = new Validator
 
@@ -49,7 +55,7 @@ class Validator {
     let valid = true;
 
     Array.from(row).forEach((nr, index) => {
-      if (nr === ' ') {
+      if (' ' === nr) {
         return;
       }
 
@@ -57,11 +63,11 @@ class Validator {
         return;
       }
 
-      if (Number.parseInt(nr) === 0) {
+      if ('0' === nr) {
         return;
       }
 
-      if (numbersInLine[nr] != undefined) {
+      if (undefined !== numbersInLine[nr]) {
         valid = false;
       }
 
@@ -72,11 +78,11 @@ class Validator {
   }
 
   isFrameColumn(index) {
-    return 6 === index % 7;
+    return this.SUBGROUP_WIDTH === index % (this.SUBGROUP_WIDTH + 1);
   }
 
   isFrameRow(index) {
-    return 3 === index % 4;
+    return this.SUBGROUP_HEIGHT === index % (this.SUBGROUP_HEIGHT + 1);
   }
 
   checkColumns(sudoku) {
@@ -101,7 +107,7 @@ class Validator {
           continue;
         }
 
-        if (colNumbers[char] !== undefined) {
+        if (undefined !== colNumbers[char]) {
           valid = false;
         }
 
@@ -114,22 +120,20 @@ class Validator {
 
   checkSubgroup(sudoku) {
     let valid = true;
-
     
-    for (let horizontalSubgroup = 0; horizontalSubgroup < 3; horizontalSubgroup++) {
-      for (let verticalSubgroup = 0; verticalSubgroup < 3; verticalSubgroup++) {
-
+    for (let horizontalSubgroup = 0; horizontalSubgroup < this.SUBGROUPS_EACH_WAY; horizontalSubgroup++) {
+      for (let verticalSubgroup = 0; verticalSubgroup < this.SUBGROUPS_EACH_WAY; verticalSubgroup++) {
 
         let subgroup = {};
-        for (let x = 0; x < 6; x++) {
-          for (let y = 0; y < 3; y++) {
-            let char = sudoku[y + (verticalSubgroup * 3) + verticalSubgroup].charAt(x + (horizontalSubgroup * 6) + horizontalSubgroup);
+        for (let x = 0; x < this.SUBGROUP_WIDTH; x++) {
+          for (let y = 0; y < this.SUBGROUP_HEIGHT; y++) {
+            let char = sudoku[y + (verticalSubgroup * this.SUBGROUP_HEIGHT) + verticalSubgroup].charAt(x + (horizontalSubgroup * this.SUBGROUP_WIDTH) + horizontalSubgroup);
     
-            if (char === '' || char === ' ' || char === '0' || char === '\n') {
+            if ('' === char || ' ' === char || '0' === char || '\n' === char) {
               continue;
             }
 
-            if (subgroup[char] !== undefined) {
+            if (undefined !== subgroup[char]) {
               valid = false;
             }
     
