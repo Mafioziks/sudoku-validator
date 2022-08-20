@@ -30,7 +30,7 @@ A puzzle is valid if:
 
 1. No numbers are repeated in any of the rows
 2. No numbers are repeated in any of the columns
-3. Every 9x9 square has no repeated numbers
+3. Every 3x3 square has no repeated numbers
 
 ## Implementation
 
