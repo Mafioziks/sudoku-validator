@@ -55,15 +55,7 @@ class Validator {
     let valid = true;
 
     Array.from(row).forEach((nr, index) => {
-      if (' ' === nr) {
-        return;
-      }
-
-      if (this.isFrameColumn(index)) {
-        return;
-      }
-
-      if ('0' === nr) {
+      if (' ' === nr || '0' === nr || this.isFrameColumn(index)) {
         return;
       }
 
